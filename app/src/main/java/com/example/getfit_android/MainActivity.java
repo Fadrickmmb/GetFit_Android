@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    Button btn_logout, toMealCalories;
+    Button btn_logout, toMealCalories, toTodaysMeals;
 
     TextView textView;
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         btn_logout = findViewById(R.id.btn_logout);
         toMealCalories = findViewById(R.id.toMealCalories);
+        toTodaysMeals = findViewById(R.id.toTodaysMeals);
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
         if (user == null){
@@ -51,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(user.getEmail());
         }
 
+
+        toTodaysMeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Today.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         toMealCalories.setOnClickListener(new View.OnClickListener() {
             @Override
