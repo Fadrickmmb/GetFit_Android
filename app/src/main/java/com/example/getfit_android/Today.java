@@ -83,6 +83,16 @@ public class Today extends AppCompatActivity {
             }
         });
 
+
+        finishDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FinishDay.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         checkCalories.setOnClickListener(v -> {
             String mealDescription = mealInput.getText().toString().trim();
             if (!mealDescription.isEmpty()) {
