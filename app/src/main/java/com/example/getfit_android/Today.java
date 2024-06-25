@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+// Today Screen, Showing the total of the Calories for the day
+
 public class Today extends AppCompatActivity {
 
     Button back, checkCalories, addMeal, finishDay;
