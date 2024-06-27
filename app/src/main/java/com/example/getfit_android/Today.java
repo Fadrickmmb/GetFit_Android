@@ -1,5 +1,6 @@
 package com.example.getfit_android;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 
 public class Today extends AppCompatActivity {
 
-    Button back, checkCalories, addMeal, finishDay;
+    Button back, checkCalories, addMeal, endDay;
     TextInputEditText mealName, mealInput;
     TextView mealsOfTheDay, totalNutrients;
     ListView mealList;
@@ -62,7 +64,7 @@ public class Today extends AppCompatActivity {
         back = findViewById(R.id.BackToMenu);
         checkCalories = findViewById(R.id.checkCalories);
         addMeal = findViewById(R.id.addMeal);
-        finishDay = findViewById(R.id.finishDay);
+        endDay = findViewById(R.id.endDay);
 
         mealName = findViewById(R.id.MealName);
         mealInput = findViewById(R.id.newMeal);
@@ -85,13 +87,20 @@ public class Today extends AppCompatActivity {
             }
         });
 
-
-        finishDay.setOnClickListener(new View.OnClickListener() {
+        endDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FinishDay.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Today.this);
+                builder.setTitle("This was your day");
+
+                builder.setMessage(totalNutrients.getText().toString());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
             }
         });
 
