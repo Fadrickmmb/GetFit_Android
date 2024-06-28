@@ -22,7 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/BackToMenu"
-                android:text="back" />
+                android:text="back"
+                android:backgroundTint="@color/getFitRed"/>
 
         </LinearLayout>
 
@@ -103,13 +104,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Check Calories"
-                android:id="@+id/checkCalories" />
+                android:id="@+id/checkCalories"
+                android:backgroundTint="@color/getFitRed"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add This Meal"
-                android:id="@+id/addMeal" />
+                android:id="@+id/addMeal"
+                android:backgroundTint="@color/getFitRed"/>
         </LinearLayout>
 
         <TextView
@@ -147,7 +150,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="End Day"
-                android:id="@+id/endDay" />
+                android:id="@+id/endDay"
+                android:backgroundTint="@color/getFitRed"
+                />
 
         </LinearLayout>
 

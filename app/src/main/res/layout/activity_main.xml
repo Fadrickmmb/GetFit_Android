@@ -34,7 +34,8 @@
                 android:layout_height="120dp"
                 app:cornerRadius="0dp"
                 android:text=""
-                android:id="@+id/toTodaysMeals"/>
+                android:id="@+id/toTodaysMeals"
+                android:backgroundTint="@color/getFitRed"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +62,8 @@
                 android:layout_height="120dp"
                 app:cornerRadius="0dp"
                 android:text=""
-                android:id="@+id/toMealCalories"/>
+                android:id="@+id/toMealCalories"
+                android:backgroundTint="@color/getFitRed"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +96,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 app:cornerRadius="0dp"
-                android:text=""/>
+                android:text=""
+                android:backgroundTint="@color/getFitRed"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,7 +123,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 app:cornerRadius="0dp"
-                android:text=""/>
+                android:text=""
+                android:backgroundTint="@color/getFitRed"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,6 +149,7 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:id="@+id/btn_logout"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/getFitRed"/>
 
 </LinearLayout>

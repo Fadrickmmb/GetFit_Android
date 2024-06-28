@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/BackToMenu"
             android:text="back"
+            android:backgroundTint="@color/getFitRed"
             />
 
     </LinearLayout>
@@ -59,7 +60,8 @@
         android:layout_height="wrap_content"
         android:text="Find Calories"
         android:id="@+id/findCaloriesButton"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:backgroundTint="@color/getFitRed"/>
     </LinearLayout>
 
     <TextView

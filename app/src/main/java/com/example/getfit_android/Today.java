@@ -44,7 +44,7 @@ public class Today extends AppCompatActivity {
 
     RequestQueue requestQueue;
 
-    // Variables to hold total nutrient values
+
     double totalCalories = 0.0;
     double totalProtein = 0.0;
     double totalFat = 0.0;
@@ -78,6 +78,8 @@ public class Today extends AppCompatActivity {
         mealAdapter = new MealAdapter(this, meals);
         mealList.setAdapter(mealAdapter);
 
+
+        //Back Button Function
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +89,8 @@ public class Today extends AppCompatActivity {
             }
         });
 
+        // End Day Function - When Clicking the End Day button, a pop up displays the result of the Calorie Intake of that
+        // day, including the macronutrients. It also creates a "Close" button, to close the pop up
         endDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +108,9 @@ public class Today extends AppCompatActivity {
             }
         });
 
+
+        // When clicking the Check Calories Button, the Fetch Calories function is called.
+        // If there is nothing on the input, a toast message lets the user know that.
         checkCalories.setOnClickListener(v -> {
             String mealDescription = mealInput.getText().toString().trim();
             if (!mealDescription.isEmpty()) {
@@ -113,6 +120,9 @@ public class Today extends AppCompatActivity {
             }
         });
 
+
+        //When the Add meal button is clicked, the function fetchCalories is called, and its result is
+        //shown on the List View
         addMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +137,11 @@ public class Today extends AppCompatActivity {
         });
     }
 
+
+
+    //Function that calls the CalorieNinjas API. It sends the user input to the API,
+    //and after the response it calls the function parseAndDisplayResponse, to do
+    //exactly what the function name says.
     private void fetchCalories(String query) {
         String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
 
@@ -223,7 +238,6 @@ public class Today extends AppCompatActivity {
                 mealCarbohydrates += item.getDouble("carbohydrates_total_g");
             }
 
-            // Update total values
             totalCalories += mealCalories;
             totalProtein += mealProtein;
             totalFat += mealFat;
@@ -237,7 +251,7 @@ public class Today extends AppCompatActivity {
             meals.add(meal);
             mealAdapter.notifyDataSetChanged();
 
-            // Update the total nutrients display
+
             totalNutrients.setText("Total Nutrients:\nCalories: " + totalCalories +
                     "\nProtein: " + totalProtein + " g" +
                     "\nFat: " + totalFat + " g" +
