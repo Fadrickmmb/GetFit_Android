@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/Logo"/>
+            android:src="@drawable/logo"/>
 
     </LinearLayout>
 
@@ -123,7 +123,7 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="LOGIN"
             android:textColor="@color/getFitRed"
@@ -157,5 +157,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
