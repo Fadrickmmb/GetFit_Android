@@ -13,10 +13,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SetGoal extends AppCompatActivity {
 
 
+    FirebaseAuth auth;
+    FirebaseUser user;
     TextView username;
     LinearLayout profile, today, history, meal;
     FloatingActionButton setGoal;
@@ -38,6 +42,18 @@ public class SetGoal extends AppCompatActivity {
         meal = findViewById(R.id.mealNavButton);
         setGoal = findViewById(R.id.setGoalButton);
         username = findViewById(R.id.setGoalUsername);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null){
+            Intent intent = new Intent(getApplicationContext(), Launcher.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            username.setText(user.getEmail());
+        }
 
 
         today.setOnClickListener(new View.OnClickListener() {

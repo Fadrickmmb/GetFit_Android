@@ -6,135 +6,124 @@
     android:layout_height="match_parent"
     tools:context=".Today">
 
-    <LinearLayout
-        android:id="@+id/main"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/BackToMenu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/home_button"
+            android:backgroundTint="@color/getFitRed"
+            android:layout_margin="8dp"
+            android:contentDescription="Home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/todaysMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start">
-
-            <Button
-                android:id="@+id/BackToMenu"
-                android:background="@drawable/home_button"
-                android:backgroundTint="@color/getFitRed"
-                android:layout_margin="8dp"
-                android:contentDescription="Home"
-                android:layout_width="48dp"
-                android:layout_height="48dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:text="Today's Meals"
+            android:textSize="24dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toBottomOf="@id/BackToMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today's Meals"
-                android:textSize="24dp"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/addMeal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="100dp">
+            android:text="Add Meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/todaysMeals" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Meal"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mealNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintTop_toBottomOf="@id/addMeal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/MealName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:hint="Name of the Meal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name of the Meal"
-                    android:id="@+id/MealName" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newMealLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintTop_toBottomOf="@id/mealNameLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newMeal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Content of Meal"
-                    android:id="@+id/newMeal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                android:hint="Content of Meal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/buttonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/newMealLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <Button
+                android:id="@+id/checkCalories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Check Calories"
-                android:id="@+id/checkCalories"
                 android:textColor="@color/getFitRed"
                 android:backgroundTint="@color/buttonWhite"/>
 
             <Button
+                android:id="@+id/addMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add This Meal"
-                android:id="@+id/addMeal"
                 android:textColor="@color/getFitRed"
-                android:backgroundTint="@color/buttonWhite"
-                />
+                android:backgroundTint="@color/buttonWhite" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/nameOfMeal"
-            android:text=""
-            android:textSize="20dp" />
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20dp"
+            app:layout_constraintTop_toBottomOf="@id/buttonsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
             android:id="@+id/mealsOfTheDay"
-            android:text="" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintTop_toBottomOf="@id/nameOfMeal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <TextView
             android:id="@+id/totalNutrients"
             android:layout_width="wrap_content"
@@ -142,30 +131,35 @@
             android:text="Total Nutrients:\nCalories: 0\nProtein: 0 g\nFat: 0 g\nCarbohydrates: 0 g"
             android:layout_marginTop="16dp"
             android:textSize="16sp"
-            android:layout_gravity="center_horizontal" />
+            app:layout_constraintTop_toBottomOf="@id/mealsOfTheDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ListView
+            android:id="@+id/mealList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mealList" />
+            app:layout_constraintTop_toBottomOf="@id/totalNutrients"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/endDay"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="End Day"
-                android:id="@+id/endDay"
-                android:textColor="@color/getFitRed"
-                android:backgroundTint="@color/buttonWhite"
-                />
-
-        </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/buttonWhite"
+            android:text="End Day"
+            android:textColor="@color/getFitRed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mealList" />
 
 
-    </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </ScrollView>
