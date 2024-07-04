@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="getFitRed">#FF5757</color>
     <color name="buttonWhite">#FAF6F6</color>
+    <color name="getFitGray">#bababa</color>
 </resources>

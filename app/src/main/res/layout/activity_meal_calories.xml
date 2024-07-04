@@ -15,13 +15,13 @@
         android:gravity="start">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/BackToMenu"
-            android:text="back"
+            android:background="@drawable/home_button"
             android:backgroundTint="@color/getFitRed"
-            />
-
+            android:layout_margin="8dp"
+            android:contentDescription="Home" />
     </LinearLayout>
 
     <TextView
@@ -31,37 +31,36 @@
         android:gravity="center"
         android:layout_marginTop="200dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputMeal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Example: 200g Chicken Breast and 100g White Rice"
-            android:textSize="15dp"
-            android:textColor="@android:color/darker_gray">
-
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="20dp">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Find Calories"
-        android:id="@+id/findCaloriesButton"
-        android:gravity="center"
-        android:backgroundTint="@color/getFitRed"/>
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="7dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputMeal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Example: 200g Chicken Breast and 100g White Rice"
+                android:textSize="15dp"
+                android:textColor="@android:color/darker_gray">
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/findCaloriesButton"
+            android:background="@drawable/search_button"
+            android:backgroundTint="@color/getFitRed"
+            android:layout_margin="8dp"
+            android:contentDescription="Search"/>
+
     </LinearLayout>
 
     <TextView
@@ -75,8 +74,4 @@
         android:layout_height="wrap_content"
         android:text=""
         android:id="@+id/parsedResponse"/>
-
-
-
-
 </LinearLayout>

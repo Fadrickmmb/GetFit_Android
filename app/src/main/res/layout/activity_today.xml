@@ -19,11 +19,13 @@
             android:gravity="start">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/BackToMenu"
-                android:text="back"
-                android:backgroundTint="@color/getFitRed"/>
+                android:background="@drawable/home_button"
+                android:backgroundTint="@color/getFitRed"
+                android:layout_margin="8dp"
+                android:contentDescription="Home"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
 
         </LinearLayout>
 
@@ -63,7 +65,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -82,7 +86,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -105,14 +111,17 @@
                 android:layout_height="wrap_content"
                 android:text="Check Calories"
                 android:id="@+id/checkCalories"
-                android:backgroundTint="@color/getFitRed"/>
+                android:textColor="@color/getFitRed"
+                android:backgroundTint="@color/buttonWhite"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add This Meal"
                 android:id="@+id/addMeal"
-                android:backgroundTint="@color/getFitRed"/>
+                android:textColor="@color/getFitRed"
+                android:backgroundTint="@color/buttonWhite"
+                />
         </LinearLayout>
 
         <TextView
@@ -151,7 +160,8 @@
                 android:layout_height="wrap_content"
                 android:text="End Day"
                 android:id="@+id/endDay"
-                android:backgroundTint="@color/getFitRed"
+                android:textColor="@color/getFitRed"
+                android:backgroundTint="@color/buttonWhite"
                 />
 
         </LinearLayout>
