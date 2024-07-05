@@ -22,6 +22,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
@@ -29,6 +31,10 @@ public class Register extends AppCompatActivity {
     Button buttonReg;
 
     FirebaseAuth mAuth;
+
+    FirebaseDatabase database;
+
+    DatabaseReference reference;
 
     ProgressBar progressBar;
 
@@ -104,9 +110,10 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
+
                                 if (task.isSuccessful()) {
 
-
+                                    insertToDatabase();
 
                                     Toast.makeText(Register.this, "Thank Your for creating an Account",
                                             Toast.LENGTH_SHORT).show();
@@ -116,8 +123,24 @@ public class Register extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
+
+                            private void insertToDatabase() {
+
+                                database = FirebaseDatabase.getInstance();
+                                reference = database.getReference("users");
+
+                                String nameUser = editTextName.getText().toString().trim();
+                                String emailUser = editTextEmail.getText().toString().trim();
+                                String passwordUser = editTextPassword.getText().toString().trim();
+
+
+
+                            }
                         });
             }
         });
+
+
+
     }
 }
