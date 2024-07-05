@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword, editTextName;
     Button buttonReg;
 
     FirebaseAuth mAuth;
@@ -59,6 +59,7 @@ public class Register extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        editTextName = findViewById(R.id.nameRegister);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonReg = findViewById(R.id.btn_register);
@@ -78,9 +79,15 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
+                String name, email, password;
+                name = String.valueOf(editTextName.getText());
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
+
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(Register.this, "Please enter a Name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if (TextUtils.isEmpty(email)){
                     Toast.makeText(Register.this, "Please enter an Email Address", Toast.LENGTH_SHORT).show();
@@ -98,6 +105,9 @@ public class Register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
+
+
+
                                     Toast.makeText(Register.this, "Thank Your for creating an Account",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
