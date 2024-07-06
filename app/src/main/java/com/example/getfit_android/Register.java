@@ -115,8 +115,7 @@ public class Register extends AppCompatActivity {
 
                                     insertToDatabase();
 
-                                    Toast.makeText(Register.this, "Thank Your for creating an Account",
-                                            Toast.LENGTH_SHORT).show();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(Register.this, "Authentication failed.",
@@ -132,6 +131,21 @@ public class Register extends AppCompatActivity {
                                 String nameUser = editTextName.getText().toString().trim();
                                 String emailUser = editTextEmail.getText().toString().trim();
                                 String passwordUser = editTextPassword.getText().toString().trim();
+
+                                Model user = new Model(nameUser, emailUser, passwordUser);
+                                reference.child(emailUser).setValue(user);
+
+                                Toast.makeText(Register.this, "Thank Your for creating an Account",
+                                        Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(Register.this, SetGoal.class);
+
+                                intent.putExtra("email", emailUser);
+                                intent.putExtra("name", nameUser);
+                                intent.putExtra("password", passwordUser);
+                                startActivity(intent);
+                                finish();
+
 
 
 
