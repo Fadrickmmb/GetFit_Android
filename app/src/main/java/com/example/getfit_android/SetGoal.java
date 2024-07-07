@@ -43,6 +43,8 @@ public class SetGoal extends AppCompatActivity {
             return insets;
         });
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+
         profile = findViewById(R.id.profileNavButton);
         today = findViewById(R.id.todayNavButton);
         history = findViewById(R.id.historyNavButton);
@@ -99,7 +101,11 @@ public class SetGoal extends AppCompatActivity {
             }
         });
 
+    }
 
+
+
+    public void getDBInfo(){
 
 
 

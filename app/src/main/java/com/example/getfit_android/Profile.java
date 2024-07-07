@@ -13,12 +13,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
-
     Button logoutButton;
     TextView profile_text;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +42,14 @@ public class Profile extends AppCompatActivity {
         logoutButton = findViewById(R.id.profile_logout_button);
         profile_text = findViewById(R.id.profile_text);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        profile_text.setText("Hey, " + getIntent().getStringExtra("name"));
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
+            fetchUserName(userEmail);
+        }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +60,24 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    private void fetchUserName(String email) {
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        String userName = userSnapshot.child("name").getValue(String.class);
+                        profile_text.setText("Hey, " + userName);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors.
+            }
+        });
     }
 }
