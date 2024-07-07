@@ -66,8 +66,8 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         editTextName = findViewById(R.id.nameRegister);
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
+        editTextEmail = findViewById(R.id.emailRegister);
+        editTextPassword = findViewById(R.id.passwordRegister);
         buttonReg = findViewById(R.id.btn_register);
         textView = findViewById(R.id.loginNow);
         progressBar = findViewById(R.id.progressBar);
@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
                                 String passwordUser = editTextPassword.getText().toString().trim();
                                 int calorieGoal = 2000;
 
-                                Model user = new Model(nameUser, emailUser, passwordUser, calorieGoal);
+                                Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal);
                                 reference.child(nameUser).setValue(user);
 
                                 Toast.makeText(Register.this, "Thank Your for creating an Account",
