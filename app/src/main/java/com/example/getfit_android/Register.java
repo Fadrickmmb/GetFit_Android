@@ -45,7 +45,7 @@ public class Register extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SetGoal.class);
             startActivity(intent);
             finish();
         }
@@ -131,9 +131,10 @@ public class Register extends AppCompatActivity {
                                 String nameUser = editTextName.getText().toString().trim();
                                 String emailUser = editTextEmail.getText().toString().trim();
                                 String passwordUser = editTextPassword.getText().toString().trim();
+                                int calorieGoal = 2000;
 
-                                Model user = new Model(nameUser, emailUser, passwordUser);
-                                reference.child(emailUser).setValue(user);
+                                Model user = new Model(nameUser, emailUser, passwordUser, calorieGoal);
+                                reference.child(nameUser).setValue(user);
 
                                 Toast.makeText(Register.this, "Thank Your for creating an Account",
                                         Toast.LENGTH_SHORT).show();
