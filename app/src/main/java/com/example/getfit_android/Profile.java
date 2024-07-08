@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Profile extends AppCompatActivity {
 
     Button logoutButton;
-    TextView profile_text;
+    TextView profile_text, calorie_text;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -42,6 +42,7 @@ public class Profile extends AppCompatActivity {
 
         logoutButton = findViewById(R.id.profile_logout_button);
         profile_text = findViewById(R.id.profile_text);
+        calorie_text = findViewById(R.id.calorie_text);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -49,7 +50,7 @@ public class Profile extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userEmail = currentUser.getEmail();
-            fetchUserName(userEmail);
+            fetchUserInfo(userEmail);
         }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -63,14 +64,17 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    private void fetchUserName(String email) {
+    private void fetchUserInfo(String email) {
         mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         String userName = userSnapshot.child("name").getValue(String.class);
+                        int calorieGoalInt = userSnapshot.child("calorieGoal").getValue(Integer.class);
+                        String calorieGoal = String.valueOf(calorieGoalInt);
                         profile_text.setText("Hey, " + userName);
+                        calorie_text.setText("Calorie Goal: " + calorieGoal);
                     }
                 }
             }

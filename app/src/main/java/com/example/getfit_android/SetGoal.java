@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,11 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 public class SetGoal extends AppCompatActivity {
 
 
-    FirebaseAuth auth;
-    FirebaseUser user;
+
     TextView username;
     LinearLayout profile, today, history, meal;
     FloatingActionButton setGoal;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +55,21 @@ public class SetGoal extends AppCompatActivity {
         setGoal = findViewById(R.id.setGoalButton);
         username = findViewById(R.id.setGoalUsername);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        if (user == null){
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
+            fetchUserInfo(userEmail);
+        }else{
             Intent intent = new Intent(getApplicationContext(), Launcher.class);
             startActivity(intent);
             finish();
         }
-        else {
-            username.setText("Hey, " + getIntent().getStringExtra("name"));
-        }
+
+        //username.setText("Hey, " + getIntent().getStringExtra("name"));
 
 
         today.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +112,28 @@ public class SetGoal extends AppCompatActivity {
 
 
 
-    public void getDBInfo(){
+    public void fetchUserInfo(String email){
 
+    mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    String userName = userSnapshot.child("name").getValue(String.class);
+                    username.setText("Hey, " + userName);
+                    //String calorieGoal = userSnapshot.child("calorieGoal").getValue(String.class);
+                    //calorie_text.setText("Calorie Goal: " + calorieGoal);
+                }
+            }
+
+        }
+
+        @Override
+
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
 
 
     }
