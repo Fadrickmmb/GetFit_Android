@@ -23,19 +23,10 @@
         tools:ignore="MissingConstraints" />
 
 
-    <TextView
-        android:id="@+id/calorie_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calories Here"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="300dp"
         android:layout_height="50dp"
         app:boxBackgroundMode="outline"
@@ -47,12 +38,41 @@
         app:layout_constraintVertical_bias="0.324">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profileNameEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/profileNameEdit"
             android:hint="Name" />
 
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/calorie_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Calorie Goal"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.439" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomAppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calorie_text"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profileCalorieEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
     </com.google.android.material.textfield.TextInputLayout>

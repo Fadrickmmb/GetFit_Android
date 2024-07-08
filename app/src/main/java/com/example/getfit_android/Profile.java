@@ -73,8 +73,8 @@ public class Profile extends AppCompatActivity {
                         String userName = userSnapshot.child("name").getValue(String.class);
                         int calorieGoalInt = userSnapshot.child("calorieGoal").getValue(Integer.class);
                         String calorieGoal = String.valueOf(calorieGoalInt);
-                        profile_text.setText("Hey, " + userName);
-                        calorie_text.setText("Calorie Goal: " + calorieGoal);
+                        profile_text.setText(userName);
+                        calorie_text.setText("Current Calorie Goal: " + calorieGoal);
                     }
                 }
             }
