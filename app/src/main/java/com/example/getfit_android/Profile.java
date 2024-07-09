@@ -67,6 +67,26 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                editProfile();
+
+                Toast.makeText(Profile.this, "Saved changes Successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+    }
+
+
+    private void editProfile(){
+
     }
 
     private void fetchUserInfo(String email) {
@@ -80,6 +100,7 @@ public class Profile extends AppCompatActivity {
                         String calorieGoal = String.valueOf(calorieGoalInt);
                         profile_text.setText(userName);
                         calorie_text.setText("Current Calorie Goal: " + calorieGoal);
+                        nameEdit.setHint(userName);
                         calorieEdit.setHint(calorieGoal);
                     }
                 }

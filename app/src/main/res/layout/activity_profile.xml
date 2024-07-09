@@ -40,8 +40,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profileNameEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:layout_height="match_parent"
+            android:textSize="12dp"
+            android:padding="2dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +74,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profileCalorieEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:textSize="12dp"
+            android:padding="2dp"
+            />
 
 
     </com.google.android.material.textfield.TextInputLayout>
