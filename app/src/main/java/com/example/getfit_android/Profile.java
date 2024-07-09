@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,9 +24,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
-    Button logoutButton;
+    Button logoutButton, saveButton;
     TextView profile_text, calorie_text;
 
+    TextInputEditText nameEdit, calorieEdit;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -41,8 +43,11 @@ public class Profile extends AppCompatActivity {
         });
 
         logoutButton = findViewById(R.id.profile_logout_button);
+        saveButton = findViewById(R.id.profile_save_button);
         profile_text = findViewById(R.id.profile_text);
         calorie_text = findViewById(R.id.calorie_text);
+        nameEdit = findViewById(R.id.profileNameEdit);
+        calorieEdit = findViewById(R.id.profileCalorieEdit);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -75,6 +80,7 @@ public class Profile extends AppCompatActivity {
                         String calorieGoal = String.valueOf(calorieGoalInt);
                         profile_text.setText(userName);
                         calorie_text.setText("Current Calorie Goal: " + calorieGoal);
+                        calorieEdit.setHint(calorieGoal);
                     }
                 }
             }
