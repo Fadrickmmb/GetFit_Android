@@ -34,8 +34,8 @@
         app:layout_constraintVertical_bias="0.070">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:src="@drawable/calorie_fire" />
 
@@ -45,8 +45,9 @@
             android:layout_weight="1"
             android:text="2000"
             android:textColor="@color/getFitGray"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:paddingRight="10dp"/>
 
     </LinearLayout>
 
@@ -126,6 +127,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
@@ -143,6 +145,49 @@
             android:textColor="@color/getFitGray"
             android:textSize="16dp"
             android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.426"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MEALS"
+            android:textColor="@color/getFitRed"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:paddingLeft="30dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textColor="@color/getFitRed"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:paddingRight="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EDIT"
+            android:textColor="@color/getFitGray"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:paddingRight="50dp"/>
+
 
 
     </LinearLayout>
