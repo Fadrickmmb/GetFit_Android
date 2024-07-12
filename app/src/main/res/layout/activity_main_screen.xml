@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mainScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.950"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/mainScreenName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.070">
 
@@ -40,6 +40,7 @@
             android:src="@drawable/calorie_fire" />
 
         <TextView
+            android:id="@+id/mainScreenCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -171,6 +172,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/mainScreenAddMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
