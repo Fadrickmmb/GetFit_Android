@@ -1,5 +1,6 @@
 package com.example.getfit_android;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -75,6 +76,14 @@ public class MainScreen extends AppCompatActivity {
         }
 
 
+        addMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
 
         // BOTTOM NAV BAR REDIRECTION - 1/4
         todayNavButton.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +150,15 @@ public class MainScreen extends AppCompatActivity {
                 Toast.makeText(MainScreen.this, "Error connecting to the Database", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    private void showPopUp(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.popup_add_meal);
+        dialog.setCancelable(true);
+
+
     }
 
 }

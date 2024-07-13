@@ -15,19 +15,19 @@
         android:contentDescription="Close Popup" />
 
     <EditText
-        android:id="@+id/mealName"
+        android:id="@+id/popUpMealName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Meal Name" />
 
     <EditText
-        android:id="@+id/mealCalories"
+        android:id="@+id/popUpMeal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Calories" />
 
     <TextView
-        android:id="@+id/apiResult"
+        android:id="@+id/popUpResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -42,13 +42,13 @@
         android:paddingTop="16dp">
 
         <Button
-            android:id="@+id/checkCaloriesButton"
+            android:id="@+id/popUpCheckButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Check Kcal" />
 
         <Button
-            android:id="@+id/addMealButton"
+            android:id="@+id/popUpAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
