@@ -11,10 +11,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -25,6 +34,9 @@ public class MainScreen extends AppCompatActivity {
     LinearLayout todayNavButton, mealNavButton, historyNavButton, profileNavButton;
 
     ProgressBar calorieBar;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -52,6 +64,18 @@ public class MainScreen extends AppCompatActivity {
 
         calorieBar = findViewById(R.id.calorieBar);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
+        }
+
+
+
+        // BOTTOM NAV BAR REDIRECTION - 1/4
         todayNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +85,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR REDIRECTION - 2/4
         mealNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +95,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR REDIRECTION - 3/4
         historyNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +105,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR REDIRECTION - 4/4
         profileNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,11 +116,35 @@ public class MainScreen extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
     }
+
+    private void fetchUserInfo(String email){
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                        String userName = userSnapshot.child("name").getValue(String.class);
+                        int calorieGoalInt = userSnapshot.child("calorieGoal").getValue(Integer.class);
+                        String calorieGoal = String.valueOf(calorieGoalInt);
+                        mainScreenName.setText(userName);
+                        mainScreenCalories.setText(calorieGoal);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+
+
+
+
 }
