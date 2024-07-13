@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -158,6 +160,12 @@ public class MainScreen extends AppCompatActivity {
         dialog.setContentView(R.layout.popup_add_meal);
         dialog.setCancelable(true);
 
+        EditText popUpMealName = dialog.findViewById(R.id.popUpMealName);
+        EditText popUpMeal = dialog.findViewById(R.id.popUpMeal);
+        TextView apiResult = dialog.findViewById(R.id.popUpResult);
+        Button popUpCheck = dialog.findViewById(R.id.popUpCheckButton);
+        Button popUpAdd = dialog.findViewById(R.id.popUpAddButton);
+        ImageButton closePopUp = dialog.findViewById(R.id.closePopup);
 
     }
 
