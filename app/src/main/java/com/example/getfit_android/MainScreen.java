@@ -167,6 +167,15 @@ public class MainScreen extends AppCompatActivity {
         Button popUpAdd = dialog.findViewById(R.id.popUpAddButton);
         ImageButton closePopUp = dialog.findViewById(R.id.closePopup);
 
+        closePopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+
     }
 
 }
