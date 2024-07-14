@@ -175,6 +175,13 @@ public class MainScreen extends AppCompatActivity {
         });
 
 
+        popUpCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mealName = popUpMealName.getText().toString();
+
+            }
+        });
 
     }
 
