@@ -179,7 +179,11 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String mealName = popUpMealName.getText().toString();
-
+                String mealDescription = popUpMeal.getText().toString();
+                if (mealName.isEmpty() || mealDescription.isEmpty()){
+                    Toast.makeText(MainScreen.this, "Please enter both Meal Name and Meal Description", Toast.LENGTH_SHORT).show();
+                }else{
+                }
             }
         });
 
