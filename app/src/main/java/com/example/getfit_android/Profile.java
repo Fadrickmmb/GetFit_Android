@@ -161,6 +161,15 @@ public class Profile extends AppCompatActivity {
     // Function to Save Changes to Profile
     private void editProfile(){
 
+        String newUserName = nameEdit.getText().toString().trim();
+        if (!newUserName.isEmpty()){
+
+        }
+
+        String newCalorieGoal = calorieEdit.getText().toString().trim();
+        if(!newCalorieGoal.isEmpty()){
+
+        }
     }
 
 
