@@ -133,7 +133,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/profileNavButton"
+                android:id="@+id/profileNavButtonProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -158,7 +158,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/todayNavButton"
+                android:id="@+id/profileNavButtonToday"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -183,7 +183,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/historyNavButton"
+                android:id="@+id/profileNavButtonHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -208,7 +208,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/mealNavButton"
+                android:id="@+id/profileNavButtonMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

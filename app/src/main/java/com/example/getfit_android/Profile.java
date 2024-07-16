@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class Profile extends AppCompatActivity {
     Button logoutButton, saveButton;
     TextView profile_text, calorie_text;
 
+    LinearLayout profileNavButtonProfile, profileNavButtonMeal, profileNavButtonHistory, profileNavButtonToday;
+
     TextInputEditText nameEdit, calorieEdit;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -48,6 +51,11 @@ public class Profile extends AppCompatActivity {
         calorie_text = findViewById(R.id.calorie_text);
         nameEdit = findViewById(R.id.profileNameEdit);
         calorieEdit = findViewById(R.id.profileCalorieEdit);
+
+        profileNavButtonProfile = findViewById(R.id.profileNavButtonProfile);
+        profileNavButtonHistory = findViewById(R.id.profileNavButtonHistory);
+        profileNavButtonMeal = findViewById(R.id.profileNavButtonMeal);
+        profileNavButtonToday = findViewById(R.id.profileNavButtonToday);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -78,6 +86,48 @@ public class Profile extends AppCompatActivity {
                 Toast.makeText(Profile.this, "Saved changes Successfully", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+        // BOTTOM NAV BAR NAVIGATION 1/4
+
+        profileNavButtonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        profileNavButtonHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), History.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        profileNavButtonToday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        profileNavButtonMeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MealCalories.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
 
 
 
