@@ -189,7 +189,9 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
-    public void fetchCalories(){
+    private void fetchCalories(String query){
+        String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
+
 
     }
 
