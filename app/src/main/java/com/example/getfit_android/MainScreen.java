@@ -189,4 +189,8 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
+    public void fetchCalories(){
+
+    }
+
 }
