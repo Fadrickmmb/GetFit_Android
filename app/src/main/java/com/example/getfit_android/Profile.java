@@ -45,6 +45,7 @@ public class Profile extends AppCompatActivity {
             return insets;
         });
 
+        // Profile ID's
         logoutButton = findViewById(R.id.profile_logout_button);
         saveButton = findViewById(R.id.profile_save_button);
         profile_text = findViewById(R.id.profile_text);
@@ -52,6 +53,7 @@ public class Profile extends AppCompatActivity {
         nameEdit = findViewById(R.id.profileNameEdit);
         calorieEdit = findViewById(R.id.profileCalorieEdit);
 
+        // Bottom Nav Bar ID's
         profileNavButtonProfile = findViewById(R.id.profileNavButtonProfile);
         profileNavButtonHistory = findViewById(R.id.profileNavButtonHistory);
         profileNavButtonMeal = findViewById(R.id.profileNavButtonMeal);
@@ -66,6 +68,8 @@ public class Profile extends AppCompatActivity {
             fetchUserInfo(userEmail);
         }
 
+
+        // LOGOUT BUTTON (Firebase Auth)
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,21 +80,16 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-
+        // SAVE CHANGES TO PROFILE (editProfile Function)
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 editProfile();
-
                 Toast.makeText(Profile.this, "Saved changes Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
         // BOTTOM NAV BAR NAVIGATION 1/4
-
         profileNavButtonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +99,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR NAVIGATION 2/4
         profileNavButtonHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +109,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR NAVIGATION 3/4
         profileNavButtonToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +119,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        // BOTTOM NAV BAR NAVIGATION 4/4
         profileNavButtonMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,16 +130,9 @@ public class Profile extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
 
-    private void editProfile(){
-
-    }
-
+    // Fetching User Name and Calorie Goal / Displaying on the Input Fields
     private void fetchUserInfo(String email) {
         mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -161,4 +156,16 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+
+
+    // Function to Save Changes to Profile
+    private void editProfile(){
+
+    }
+
+
+
+
+
+
 }
