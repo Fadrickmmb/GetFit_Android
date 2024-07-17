@@ -84,8 +84,7 @@ public class Profile extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editProfile();
-                Toast.makeText(Profile.this, "Saved changes Successfully", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -156,24 +155,6 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-
-
-    // Function to Save Changes to Profile
-    private void editProfile(){
-
-        String newUserName = nameEdit.getText().toString().trim();
-        if (!newUserName.isEmpty()){
-
-        }
-
-        String newCalorieGoal = calorieEdit.getText().toString().trim();
-        if(!newCalorieGoal.isEmpty()){
-
-        }
-    }
-
-
-
 
 
 

@@ -75,6 +75,7 @@ public class MainScreen extends AppCompatActivity {
 
         if (currentUser != null) {
             String userEmail = currentUser.getEmail();
+            fetchUserInfo(userEmail);
         }
 
 
@@ -91,7 +92,7 @@ public class MainScreen extends AppCompatActivity {
         todayNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Today.class);
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 startActivity(intent);
                 finish();
             }
