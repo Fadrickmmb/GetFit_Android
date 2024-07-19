@@ -122,7 +122,7 @@ public class MainScreen extends AppCompatActivity {
         profileNavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ContactsContract.Profile.class);
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
                 finish();
             }
