@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 public class MealCalories extends AppCompatActivity {
 
-    Button findCaloriesButton, backToMenuButton;
+    Button findCaloriesButton;
     TextView responseText, parsedResponse;
     TextInputEditText inputMeal;
     RequestQueue requestQueue;
@@ -43,7 +43,6 @@ public class MealCalories extends AppCompatActivity {
             return insets;
         });
 
-        backToMenuButton = findViewById(R.id.BackToMenu);
         findCaloriesButton = findViewById(R.id.findCaloriesButton);
         responseText = findViewById(R.id.responseText);
         parsedResponse = findViewById(R.id.parsedResponse);
@@ -51,15 +50,6 @@ public class MealCalories extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-
-        backToMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         findCaloriesButton.setOnClickListener(v -> {
             String mealDescription = inputMeal.getText().toString().trim();

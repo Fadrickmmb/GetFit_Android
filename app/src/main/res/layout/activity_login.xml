@@ -54,7 +54,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
@@ -83,7 +83,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="20dp"
             app:boxCornerRadiusTopEnd="20dp"
@@ -99,6 +99,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomImage"
+        app:layout_constraintEnd_toEndOf="@+id/loginButtonLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
+        app:layout_constraintVertical_bias="0.043" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -122,16 +134,6 @@
         android:layout_marginTop="20dp"
         >
 
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="LOGIN"
-            android:textColor="@color/getFitRed"
-            android:backgroundTint="@color/buttonWhite"
-            android:textStyle="bold"
-            android:textSize="18dp"/>
-
     </LinearLayout>
 
 
@@ -141,12 +143,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Don't have an Account? Click here to Register"
-        app:layout_constraintBottom_toTopOf="@+id/bottomImage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButtonLayout"
-        app:layout_constraintVertical_bias="0.195"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        app:layout_constraintVertical_bias="0.12"
         tools:ignore="NotSibling" />
 
     <ImageView
@@ -159,6 +161,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/buttonWhite"
+        android:text="LOGIN"
+        android:textColor="@color/getFitRed"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.114" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
