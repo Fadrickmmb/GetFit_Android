@@ -69,7 +69,6 @@ public class SetGoal extends AppCompatActivity {
             finish();
         }
 
-        //username.setText("Hey, " + getIntent().getStringExtra("name"));
 
 
         today.setOnClickListener(new View.OnClickListener() {

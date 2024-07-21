@@ -1,10 +1,13 @@
 package com.example.getfit_android;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +64,7 @@ public class Login extends AppCompatActivity {
         textView = findViewById(R.id.registerNow);
         forgotPassword = findViewById(R.id.forgotPassword);
 
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +77,13 @@ public class Login extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog dialog = new Dialog(Login.this);
+                dialog.setContentView(R.layout.dialog_forgot_password);
+                dialog.setCancelable(true);
+                dialog.show();
+
+                EditText emailForgot = dialog.findViewById(R.id.emailForgot);
+                Button submitForgot = dialog.findViewById(R.id.submitForgot);
 
             }
         });
@@ -111,6 +122,6 @@ public class Login extends AppCompatActivity {
                         });
             }
         });
-
     }
+
 }
