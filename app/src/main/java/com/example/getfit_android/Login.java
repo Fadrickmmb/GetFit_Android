@@ -85,6 +85,36 @@ public class Login extends AppCompatActivity {
                 EditText emailForgot = dialog.findViewById(R.id.emailForgot);
                 Button submitForgot = dialog.findViewById(R.id.submitForgot);
 
+
+
+                submitForgot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String email = emailForgot.getText().toString().trim();
+
+                        if(TextUtils.isEmpty(email)){
+                            Toast.makeText(Login.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(Login.this, "Password Reset Email Sent", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }else{
+                                    Toast.makeText(Login.this, "Error sending Reset Password Email", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+
+
             }
         });
 
