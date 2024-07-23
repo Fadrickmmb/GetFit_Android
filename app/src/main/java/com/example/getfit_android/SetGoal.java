@@ -133,8 +133,6 @@ public class SetGoal extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String userName = userSnapshot.child("name").getValue(String.class);
                     username.setText("Hey, " + userName);
-                    //String calorieGoal = userSnapshot.child("calorieGoal").getValue(String.class);
-                    //calorie_text.setText("Calorie Goal: " + calorieGoal);
                 }
             }
 
