@@ -1,14 +1,23 @@
 package com.example.getfit_android;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.slider.Slider;
+
 public class SetCalories extends AppCompatActivity {
+
+
+    Slider calorieSlider;
+
+    TextView userTextView, sliderValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +29,12 @@ public class SetCalories extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        userTextView = findViewById(R.id.setCaloriesNameView);
+        sliderValue = findViewById(R.id.sliderValue);
+        calorieSlider = findViewById(R.id.calorieSlider);
+
+
+
     }
 }
