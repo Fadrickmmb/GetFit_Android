@@ -1,6 +1,7 @@
 package com.example.getfit_android;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +20,8 @@ public class SetCalories extends AppCompatActivity {
 
     TextView userTextView, sliderValue;
 
+    Button done;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,15 @@ public class SetCalories extends AppCompatActivity {
         userTextView = findViewById(R.id.setCaloriesNameView);
         sliderValue = findViewById(R.id.sliderValue);
         calorieSlider = findViewById(R.id.calorieSlider);
+        done = findViewById(R.id.setCaloriesDoneButton);
+
+        sliderValue.setText("Calorie Goal: " + (int) calorieSlider.getValue());
+        calorieSlider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                sliderValue.setText("Calorie Goal: " + (int) value);
+            }
+        });
 
 
 

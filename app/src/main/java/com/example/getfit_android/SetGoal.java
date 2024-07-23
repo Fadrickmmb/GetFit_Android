@@ -73,6 +73,16 @@ public class SetGoal extends AppCompatActivity {
             finish();
         }
 
+
+        setGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SetCalories.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         keepGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
