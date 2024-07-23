@@ -3,6 +3,7 @@ package com.example.getfit_android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class SetGoal extends AppCompatActivity {
     LinearLayout profile, today, history, meal;
     FloatingActionButton setGoal;
 
+    Button keepGoalButton;
+
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -54,6 +57,7 @@ public class SetGoal extends AppCompatActivity {
         meal = findViewById(R.id.mealNavButton);
         setGoal = findViewById(R.id.setGoalButton);
         username = findViewById(R.id.setGoalUsername);
+        keepGoalButton = findViewById(R.id.keepGoalButton);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -68,6 +72,15 @@ public class SetGoal extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        keepGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 

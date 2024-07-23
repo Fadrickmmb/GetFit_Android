@@ -90,6 +90,7 @@ Do you wish to keep the 2000 calorie goal?"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/keepGoalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonWhite"
