@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -84,7 +85,10 @@ public class Profile extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (currentUser != null) {
+                    String userEmail = currentUser.getEmail();
+                    editProfile(userEmail);
+                }
             }
         });
 
@@ -156,6 +160,56 @@ public class Profile extends AppCompatActivity {
         });
     }
 
+
+    private void editProfile(String email){
+
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        String userName = userSnapshot.child("name").getValue(String.class);
+                        int calorieGoalInt = userSnapshot.child("calorieGoal").getValue(Integer.class);
+                        String calorieGoal = String.valueOf(calorieGoalInt);
+
+                        String newName = nameEdit.getText().toString().trim();
+                        String newCalorie = calorieEdit.getText().toString().trim();
+
+                        if (!newName.isEmpty() && newName != userName){
+                            userSnapshot.getRef().child("name").setValue(newName);
+                        }
+
+                        if (!newCalorie.isEmpty()){
+                            try {
+                                int newCalorieGoal = Integer.parseInt(newCalorie);
+                                if (newCalorieGoal != calorieGoalInt){
+                                    userSnapshot.getRef().child("calorieGoal").setValue(newCalorieGoal);
+                                }
+                            }catch (NumberFormatException e){
+                                Toast.makeText(Profile.this, "We've Encountered an Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+
+                }
+                Toast.makeText(Profile.this, "Saved changes Successfully", Toast.LENGTH_SHORT).show();
+                refreshActivity();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void refreshActivity(){
+        Intent intent = new Intent(getApplicationContext(), Profile.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 }
