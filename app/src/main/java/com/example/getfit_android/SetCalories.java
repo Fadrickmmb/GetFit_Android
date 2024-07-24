@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -77,6 +78,10 @@ public class SetCalories extends AppCompatActivity {
                 if (currentUser != null) {
                     int calorieGoal = (int) calorieSlider.getValue();
                     updateCaloriesInDB(currentUser.getEmail(), calorieGoal);
+                    Toast.makeText(SetCalories.this, "Calories Goal set to " + calorieGoal, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
