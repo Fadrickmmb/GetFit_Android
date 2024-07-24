@@ -2,6 +2,7 @@ package com.example.getfit_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -70,8 +71,17 @@ public class SetCalories extends AppCompatActivity {
             }
         });
 
-    }
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentUser != null) {
+                    int calorieGoal = (int) calorieSlider.getValue();
+                    updateCaloriesInDB(currentUser.getEmail(), calorieGoal);
+                }
+            }
+        });
 
+    }
 
     public void fetchCaloriesFromDB(String email){
 
@@ -92,4 +102,22 @@ public class SetCalories extends AppCompatActivity {
         });
 
     }
+    public void updateCaloriesInDB(String email, int calorieGoal) {
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        userSnapshot.getRef().child("calorieGoal").setValue(calorieGoal);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }
