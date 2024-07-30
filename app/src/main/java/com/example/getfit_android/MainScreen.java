@@ -21,6 +21,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -92,6 +96,20 @@ public class MainScreen extends AppCompatActivity {
                 EditText popUpMealDescription = dialog.findViewById(R.id.popUpMeal);
                 TextView popUpResult = dialog.findViewById(R.id.popUpResult);
                 Button popUpAddButton = dialog.findViewById(R.id.popUpAddButton);
+
+                popUpAddButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String mealName = popUpMealName.getText().toString().trim();
+                        String mealDescription = popUpMealDescription.getText().toString().trim();
+
+                        if (mealName.isEmpty() || mealDescription.isEmpty()){
+                            Toast.makeText(MainScreen.this, "Please enter both Meal Name and Meal Description", Toast.LENGTH_SHORT).show();
+                        }else{
+                            fetchCalories(mealDescription, mealName);
+                        }
+                    }
+                });
 
 
 
@@ -169,43 +187,31 @@ public class MainScreen extends AppCompatActivity {
     }
 
 
-    private void showPopUp(){
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.popup_add_meal);
-        dialog.setCancelable(true);
+    private void fetchCalories(String query, String mealName){
+        String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
 
-        EditText popUpMealName = dialog.findViewById(R.id.popUpMealName);
-        EditText popUpMeal = dialog.findViewById(R.id.popUpMeal);
-        TextView apiResult = dialog.findViewById(R.id.popUpResult);
-        Button popUpCheck = dialog.findViewById(R.id.popUpCheckButton);
-        Button popUpAdd = dialog.findViewById(R.id.popUpAddButton);
-        ImageButton closePopUp = dialog.findViewById(R.id.closePopup);
-
-        closePopUp.setOnClickListener(new View.OnClickListener() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        parseAndAddMeal(response, mealName);
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainScreen.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
             }
-        });
-
-
-        popUpCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mealName = popUpMealName.getText().toString();
-                String mealDescription = popUpMeal.getText().toString();
-                if (mealName.isEmpty() || mealDescription.isEmpty()){
-                    Toast.makeText(MainScreen.this, "Please enter both Meal Name and Meal Description", Toast.LENGTH_SHORT).show();
-                }else{
-                }
+        }){
+            public java.util.Map<String, String> getHeaders() {
+                java.util.Map<String, String> params = new java.util.HashMap<>();
+                params.put("X-Api-Key", "6VVStmeL3WusRAYKusjoAw==8lz8IfitH9UU7t5s");
+                return params;
             }
-        });
+        };
 
     }
 
-    private void fetchCalories(String query){
-        String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
-
+    private void parseAndAddMeal(String response, String mealNameString){
 
     }
 
