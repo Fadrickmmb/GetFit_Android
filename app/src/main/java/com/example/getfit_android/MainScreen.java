@@ -88,6 +88,13 @@ public class MainScreen extends AppCompatActivity {
                 dialog.setCancelable(true);
                 dialog.show();
 
+                EditText popUpMealName = dialog.findViewById(R.id.popUpMealName);
+                EditText popUpMealDescription = dialog.findViewById(R.id.popUpMeal);
+                TextView popUpResult = dialog.findViewById(R.id.popUpResult);
+                Button popUpAddButton = dialog.findViewById(R.id.popUpAddButton);
+
+
+
 
             }
         });
