@@ -83,6 +83,12 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Dialog dialog = new Dialog(MainScreen.this);
+                dialog.setContentView(R.layout.popup_add_meal);
+                dialog.setCancelable(true);
+                dialog.show();
+
+
             }
         });
 
