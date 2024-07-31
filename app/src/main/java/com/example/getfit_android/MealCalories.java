@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ public class MealCalories extends AppCompatActivity {
     TextInputEditText inputMeal;
     RequestQueue requestQueue;
 
+    LinearLayout toProfile, toMainScreen, toHistory, toMealCalories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,11 @@ public class MealCalories extends AppCompatActivity {
         parsedResponse = findViewById(R.id.parsedResponse);
         inputMeal = findViewById(R.id.inputMeal);
 
+        toProfile = findViewById(R.id.mealCaloriesProfileNavButton);
+        toHistory = findViewById(R.id.mealCaloriesHistoryNavButton);
+        toMealCalories = findViewById(R.id.mealCaloriesMealNavButton);
+        toMainScreen = findViewById(R.id.mealCaloriesTodayNavButton);
+
         requestQueue = Volley.newRequestQueue(this);
 
 
@@ -59,7 +67,46 @@ public class MealCalories extends AppCompatActivity {
                 Toast.makeText(MealCalories.this, "Please enter a meal description", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        toMainScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        toMealCalories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MealCalories.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        toProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        toHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), History.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
+
 
     private void fetchCalories(String query) {
         String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;

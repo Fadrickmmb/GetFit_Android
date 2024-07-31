@@ -33,6 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainScreen extends AppCompatActivity {
 
     TextView mainScreenName, mainScreenCalories, addMeal;
@@ -194,7 +198,7 @@ public class MainScreen extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        parseAndAddMeal(response, mealName);
+                        parseAndDisplay(response, mealName);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -211,7 +215,28 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
-    private void parseAndAddMeal(String response, String mealNameString){
+    private void parseAndDisplay(String response, String mealNameString){
+
+        try {
+            JSONObject jsonResponse = new JSONObject(response);
+            JSONArray items = jsonResponse.getJSONArray("items");
+
+            StringBuilder formattedResponse = new StringBuilder();
+
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                formattedResponse.append("Item ").append(i + 1).append(":\n");
+                formattedResponse.append("Name: ").append(item.getString("name")).append("\n");
+                formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
+                formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
+                formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
+                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n\n");
+            }
+
+        }catch (JSONException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to parse data", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
