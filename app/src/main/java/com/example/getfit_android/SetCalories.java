@@ -58,6 +58,7 @@ public class SetCalories extends AppCompatActivity {
 
         if (currentUser != null) {
             String userEmail = currentUser.getEmail();
+            fetchUserInfo(userEmail);
         }else{
             Intent intent = new Intent(getApplicationContext(), Launcher.class);
             startActivity(intent);
@@ -123,6 +124,30 @@ public class SetCalories extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void fetchUserInfo(String email){
+
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        String userName = userSnapshot.child("name").getValue(String.class);
+                        userTextView.setText("Hey, " + userName);
+                    }
+                }
+
+            }
+
+            @Override
+
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
 }
