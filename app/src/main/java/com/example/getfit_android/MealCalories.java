@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,6 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,11 +37,13 @@ import org.json.JSONObject;
 public class MealCalories extends AppCompatActivity {
 
     Button findCaloriesButton;
-    TextView responseText, parsedResponse;
+    TextView responseText, parsedResponse, username;
     TextInputEditText inputMeal;
     RequestQueue requestQueue;
-
     LinearLayout toProfile, toMainScreen, toHistory, toMealCalories;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +61,28 @@ public class MealCalories extends AppCompatActivity {
         parsedResponse = findViewById(R.id.parsedResponse);
         inputMeal = findViewById(R.id.inputMeal);
 
+        username = findViewById(R.id.mealCaloriesName);
+
         toProfile = findViewById(R.id.mealCaloriesProfileNavButton);
         toHistory = findViewById(R.id.mealCaloriesHistoryNavButton);
         toMealCalories = findViewById(R.id.mealCaloriesMealNavButton);
         toMainScreen = findViewById(R.id.mealCaloriesTodayNavButton);
 
         requestQueue = Volley.newRequestQueue(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
+            fetchUserInfo(userEmail);
+        }else{
+            Intent intent = new Intent(getApplicationContext(), Launcher.class);
+            startActivity(intent);
+            finish();
+        }
 
 
         findCaloriesButton.setOnClickListener(v -> {
@@ -159,5 +185,30 @@ public class MealCalories extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(MealCalories.this, "Failed to parse data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    public void fetchUserInfo(String email){
+
+        mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        String userName = userSnapshot.child("name").getValue(String.class);
+                        username.setText("Hey, " + userName);
+                    }
+                }
+
+            }
+
+            @Override
+
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 }
