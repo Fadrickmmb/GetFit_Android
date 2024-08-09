@@ -1,3 +1,4 @@
+// Today.java
 package com.example.getfit_android;
 
 import android.content.DialogInterface;
@@ -30,8 +31,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// Today Screen, Showing the total of the Calories for the day
-
 public class Today extends AppCompatActivity {
 
     Button back, checkCalories, addMeal, endDay;
@@ -43,7 +42,6 @@ public class Today extends AppCompatActivity {
     MealAdapter mealAdapter;
 
     RequestQueue requestQueue;
-
 
     double totalCalories = 0.0;
     double totalProtein = 0.0;
@@ -78,39 +76,21 @@ public class Today extends AppCompatActivity {
         mealAdapter = new MealAdapter(this, meals);
         mealList.setAdapter(mealAdapter);
 
-
-        //Back Button Function
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        back.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        // End Day Function - When Clicking the End Day button, a pop up displays the result of the Calorie Intake of that
-        // day, including the macronutrients. It also creates a "Close" button, to close the pop up
-        endDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Today.this);
-                builder.setTitle("This was your day");
+        endDay.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Today.this);
+            builder.setTitle("This was your day");
 
-                builder.setMessage(totalNutrients.getText().toString());
-                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-            }
+            builder.setMessage(totalNutrients.getText().toString());
+            builder.setPositiveButton("Close", (dialog, which) -> dialog.dismiss());
+            builder.create().show();
         });
 
-
-        // When clicking the Check Calories Button, the Fetch Calories function is called.
-        // If there is nothing on the input, a toast message lets the user know that.
         checkCalories.setOnClickListener(v -> {
             String mealDescription = mealInput.getText().toString().trim();
             if (!mealDescription.isEmpty()) {
@@ -120,28 +100,17 @@ public class Today extends AppCompatActivity {
             }
         });
 
-
-        //When the Add meal button is clicked, the function fetchCalories is called, and its result is
-        //shown on the List View
-        addMeal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mealNameStr = mealName.getText().toString().trim();
-                String mealDescription = mealInput.getText().toString().trim();
-                if (mealDescription.isEmpty() || mealNameStr.isEmpty()) {
-                    Toast.makeText(Today.this, "Please fill all the inputs", Toast.LENGTH_SHORT).show();
-                } else {
-                    fetchCalories2(mealDescription, mealNameStr);
-                }
+        addMeal.setOnClickListener(view -> {
+            String mealNameStr = mealName.getText().toString().trim();
+            String mealDescription = mealInput.getText().toString().trim();
+            if (mealDescription.isEmpty() || mealNameStr.isEmpty()) {
+                Toast.makeText(Today.this, "Please fill all the inputs", Toast.LENGTH_SHORT).show();
+            } else {
+                fetchCalories2(mealDescription, mealNameStr);
             }
         });
     }
 
-
-
-    //Function that calls the CalorieNinjas API. It sends the user input to the API,
-    //and after the response it calls the function parseAndDisplayResponse, to do
-    //exactly what the function name says.
     private void fetchCalories(String query) {
         String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
 
@@ -229,6 +198,7 @@ public class Today extends AppCompatActivity {
             double mealProtein = 0.0;
             double mealFat = 0.0;
             double mealCarbohydrates = 0.0;
+            double mealFiber = 0.0;
 
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
@@ -236,6 +206,7 @@ public class Today extends AppCompatActivity {
                 mealProtein += item.getDouble("protein_g");
                 mealFat += item.getDouble("fat_total_g");
                 mealCarbohydrates += item.getDouble("carbohydrates_total_g");
+                mealFiber += item.getDouble("fiber_g");
             }
 
             totalCalories += mealCalories;
@@ -243,14 +214,9 @@ public class Today extends AppCompatActivity {
             totalFat += mealFat;
             totalCarbohydrates += mealCarbohydrates;
 
-            // Create a new Meal object
-            Meal meal = new Meal(mealNameStr, "Calories: " + mealCalories +
-                    "\nProtein: " + mealProtein + " g" +
-                    "\nFat: " + mealFat + " g" +
-                    "\nCarbohydrates: " + mealCarbohydrates + " g");
+            Meal meal = new Meal(mealNameStr, "Meal Description", String.valueOf(mealCalories), String.valueOf(mealFat), String.valueOf(mealFiber), String.valueOf(mealCarbohydrates), String.valueOf(mealProtein));
             meals.add(meal);
             mealAdapter.notifyDataSetChanged();
-
 
             totalNutrients.setText("Total Nutrients:\nCalories: " + totalCalories +
                     "\nProtein: " + totalProtein + " g" +
