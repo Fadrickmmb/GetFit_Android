@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,6 +62,16 @@ public class AddMeal extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
+        }else{
+            Intent intent = new Intent(getApplicationContext(), Launcher.class);
+            startActivity(intent);
+            finish();
+        }
 
         backToToday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +155,9 @@ public class AddMeal extends AppCompatActivity {
         }
     }
 
+
     private void addMealToDB(String name, String description){
+
 
     }
 
