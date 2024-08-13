@@ -24,6 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AddMeal extends AppCompatActivity {
 
     EditText mealName, mealDescription;
@@ -85,9 +89,9 @@ public class AddMeal extends AppCompatActivity {
 
     }
 
-    private void addMealToTextView(String name, String description){
+    private void addMealToTextView(String name, String query){
 
-        String url = "https://api.calorieninjas.com/v1/nutrition?query=" + description;
+        String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -110,10 +114,34 @@ public class AddMeal extends AppCompatActivity {
             }
         };
 
+        requestQueue.add(stringRequest);
     }
 
     private void parseAndDisplayResponse(String response){
 
+        try {
+            JSONObject jsonResponse = new JSONObject(response);
+            JSONArray items = jsonResponse.getJSONArray("items");
+
+            StringBuilder formattedResponse = new StringBuilder();
+
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                formattedResponse.append("Item ").append(i + 1).append(":\n");
+                formattedResponse.append("Name: ").append(item.getString("name")).append("\n");
+                formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
+                formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
+                formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
+                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n\n");
+            }
+
+            apiResponse.setText(formattedResponse.toString());
+            Toast.makeText(this, "Added This Meal to Today's Meals", Toast.LENGTH_SHORT).show();
+
+        }catch(JSONException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to Parse Data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addMealToDB(String name, String description){

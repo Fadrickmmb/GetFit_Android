@@ -176,7 +176,8 @@ public class MealCalories extends AppCompatActivity {
                 formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
                 formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
                 formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
-                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n\n");
+                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n");
+                formattedResponse.append("Fibers: ").append(item.getDouble("fiber_g")).append(" g\n\n");
             }
 
             parsedResponse.setText(formattedResponse.toString());

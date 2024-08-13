@@ -32,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Meal"
+        android:backgroundTint="@color/getFitRed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addMealAddButton"
         app:layout_constraintVertical_bias="0.142"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:textColor="@color/getFitGray"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/addMealBackToMain"
@@ -53,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:text="Back to Today"
+        android:backgroundTint="@color/getFitRed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
