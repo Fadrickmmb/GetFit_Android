@@ -16,6 +16,9 @@
         android:theme="@style/Theme.GetFit_Android"
         tools:targetApi="31">
         <activity
+            android:name=".AddMeal"
+            android:exported="false" />
+        <activity
             android:name=".SetCalories"
             android:exported="false" />
         <activity
