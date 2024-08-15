@@ -135,21 +135,24 @@ public class Register extends AppCompatActivity {
                                 String passwordUser = editTextPassword.getText().toString().trim();
                                 int calorieGoal = 2000;
 
-                                // Create a list of days starting with Day 1
-                                List<Day> days = new ArrayList<>();
-                                Day day1 = new Day("Day 1", emailUser, new ArrayList<>(), "0", "0", "0", "0");
-                                days.add(day1);
+                                // Create the user object without the days list
+                                Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal, new ArrayList<>());
 
-                                // Create the user object with the days list
-                                Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal, days);
-
+                                // Save the user information under the "users" table with the name as the key
                                 reference.child(nameUser).setValue(user);
 
-                                Toast.makeText(Register.this, "Thank You for creating an Account",
-                                        Toast.LENGTH_SHORT).show();
+                                // Now create the days table and add the first day for this user
+                                DatabaseReference daysReference = database.getReference("days");
+
+                                // Create Day 1
+                                Day day1 = new Day("1", emailUser, new ArrayList<>(), "0", "0", "0", "0");
+
+                                // Save Day 1 under the "days" table using the email as the key
+                                daysReference.child(emailUser.replace(".", ",")).child("1").setValue(day1);
+
+                                Toast.makeText(Register.this, "Thank You for creating an Account", Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(Register.this, SetGoal.class);
-
                                 intent.putExtra("email", emailUser);
                                 intent.putExtra("name", nameUser);
                                 intent.putExtra("password", passwordUser);

@@ -92,7 +92,7 @@ public class AddMeal extends AppCompatActivity {
                     Toast.makeText(AddMeal.this, "Please fill both Inputs", Toast.LENGTH_SHORT).show();
                 }else{
                     addMealToTextView(nameOfMeal, descriptionOfMeal);
-                    addMealToDB(nameOfMeal, descriptionOfMeal);
+
                 }
 
             }
@@ -156,9 +156,5 @@ public class AddMeal extends AppCompatActivity {
     }
 
 
-    private void addMealToDB(String name, String description){
-
-
-    }
 
 }
