@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Register extends AppCompatActivity {
 
     TextInputEditText editTextEmail, editTextPassword, editTextName;
@@ -124,7 +127,6 @@ public class Register extends AppCompatActivity {
                             }
 
                             private void insertToDatabase() {
-
                                 database = FirebaseDatabase.getInstance();
                                 reference = database.getReference("users");
 
@@ -133,10 +135,17 @@ public class Register extends AppCompatActivity {
                                 String passwordUser = editTextPassword.getText().toString().trim();
                                 int calorieGoal = 2000;
 
-                                Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal);
+                                // Create a list of days starting with Day 1
+                                List<Day> days = new ArrayList<>();
+                                Day day1 = new Day("Day 1", emailUser, new ArrayList<>(), "0", "0", "0", "0");
+                                days.add(day1);
+
+                                // Create the user object with the days list
+                                Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal, days);
+
                                 reference.child(nameUser).setValue(user);
 
-                                Toast.makeText(Register.this, "Thank Your for creating an Account",
+                                Toast.makeText(Register.this, "Thank You for creating an Account",
                                         Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(Register.this, SetGoal.class);
@@ -146,11 +155,8 @@ public class Register extends AppCompatActivity {
                                 intent.putExtra("password", passwordUser);
                                 startActivity(intent);
                                 finish();
-
-
-
-
                             }
+
                         });
             }
         });
