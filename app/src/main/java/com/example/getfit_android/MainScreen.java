@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainScreen extends AppCompatActivity {
 
     TextView mainScreenName, mainScreenCalories, addMeal;
@@ -48,7 +52,7 @@ public class MainScreen extends AppCompatActivity {
     ProgressBar calorieBar;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, dDatabase;
 
 
     @Override
@@ -78,12 +82,15 @@ public class MainScreen extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        dDatabase = FirebaseDatabase.getInstance().getReference("days");
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
             String userEmail = currentUser.getEmail();
             fetchUserInfo(userEmail);
+            String userEmailReplaced = userEmail.replace(".", ",");
+            fetchMealsFromCurrentDay(userEmailReplaced);
         }
 
 
@@ -162,6 +169,56 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MainScreen.this, "Error connecting to the Database", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchMealsFromCurrentDay(String userEmailReplaced){
+        dDatabase.child(userEmailReplaced).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String highestDayId = null;
+                for (DataSnapshot daySnapshot : dataSnapshot.getChildren()) {
+                    String dayId = daySnapshot.getKey();
+                    if (highestDayId == null || Integer.parseInt(dayId) > Integer.parseInt(highestDayId)) {
+                        highestDayId = dayId;
+                    }
+                }
+
+                if (highestDayId != null) {
+                    loadMealsFromDay(userEmailReplaced, highestDayId);
+                } else {
+                    Toast.makeText(MainScreen.this, "No meals found for the current day.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainScreen.this, "Failed to retrieve days.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadMealsFromDay(String userEmailReplaced, String dayId){
+        dDatabase.child(userEmailReplaced).child(dayId).child("meals").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Meal> mealList = new ArrayList<>();
+                for (DataSnapshot mealSnapshot : dataSnapshot.getChildren()) {
+                    Meal meal = mealSnapshot.getValue(Meal.class);
+                    if (meal != null) {
+                        mealList.add(meal);
+                    }
+                }
+                Log.d("MealCount", "Number of meals: " + mealList.size());
+
+                MainScreenAdapter adapter = new MainScreenAdapter(MainScreen.this, mealList);
+                mealsList.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainScreen.this, "Failed to retrieve meals.", Toast.LENGTH_SHORT).show();
             }
         });
     }
