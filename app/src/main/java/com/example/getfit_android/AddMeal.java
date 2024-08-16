@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -22,25 +23,29 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class AddMeal extends AppCompatActivity {
 
     EditText mealName, mealDescription;
-
     Button addMeal, backToToday;
     TextView apiResponse;
-
     RequestQueue requestQueue;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,63 +66,42 @@ public class AddMeal extends AppCompatActivity {
         addMeal = findViewById(R.id.addMealAddButton);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            String userEmail = currentUser.getEmail();
-        }else{
+            String userEmail = currentUser.getEmail().replace(".", ",");
+            mDatabase = FirebaseDatabase.getInstance().getReference("days").child(userEmail);
+        } else {
             Intent intent = new Intent(getApplicationContext(), Launcher.class);
             startActivity(intent);
             finish();
         }
 
-        backToToday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
-                startActivity(intent);
-                finish();
-            }
+        backToToday.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+            startActivity(intent);
+            finish();
         });
 
-        addMeal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String nameOfMeal = mealName.getText().toString().trim();
-                String descriptionOfMeal = mealDescription.getText().toString().trim();
+        addMeal.setOnClickListener(view -> {
+            String nameOfMeal = mealName.getText().toString().trim();
+            String descriptionOfMeal = mealDescription.getText().toString().trim();
 
-                if (nameOfMeal.isEmpty() || descriptionOfMeal.isEmpty()){
-                    Toast.makeText(AddMeal.this, "Please fill both Inputs", Toast.LENGTH_SHORT).show();
-                }else{
-                    addMealToTextView(nameOfMeal, descriptionOfMeal);
-
-                }
-
+            if (nameOfMeal.isEmpty() || descriptionOfMeal.isEmpty()) {
+                Toast.makeText(AddMeal.this, "Please fill both Inputs", Toast.LENGTH_SHORT).show();
+            } else {
+                addMealToTextView(nameOfMeal, descriptionOfMeal);
             }
         });
-
     }
 
-    private void addMealToTextView(String name, String query){
-
+    private void addMealToTextView(String name, String query) {
         String url = "https://api.calorieninjas.com/v1/nutrition?query=" + query;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        parseAndDisplayResponse(response);
-
-                    }
-                }, new Response.ErrorListener() {
+                response -> parseAndDisplayResponse(response, name),
+                error -> Toast.makeText(AddMeal.this, "Failed to fetch data", Toast.LENGTH_SHORT).show()) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddMeal.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
-            }
-        }){
             public java.util.Map<String, String> getHeaders() {
                 java.util.Map<String, String> params = new java.util.HashMap<>();
                 params.put("X-Api-Key", "6VVStmeL3WusRAYKusjoAw==8lz8IfitH9UU7t5s");
@@ -128,33 +112,58 @@ public class AddMeal extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void parseAndDisplayResponse(String response){
-
+    private void parseAndDisplayResponse(String response, String mealName) {
         try {
             JSONObject jsonResponse = new JSONObject(response);
             JSONArray items = jsonResponse.getJSONArray("items");
 
-            StringBuilder formattedResponse = new StringBuilder();
+            if (items.length() > 0) {
+                JSONObject item = items.getJSONObject(0);
+                double calories = item.getDouble("calories");
+                double protein = item.getDouble("protein_g");
+                double fat = item.getDouble("fat_total_g");
+                double carbs = item.getDouble("carbohydrates_total_g");
 
-            for (int i = 0; i < items.length(); i++) {
-                JSONObject item = items.getJSONObject(i);
-                formattedResponse.append("Item ").append(i + 1).append(":\n");
-                formattedResponse.append("Name: ").append(item.getString("name")).append("\n");
-                formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
-                formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
-                formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
-                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n\n");
+
+                Meal newMeal = new Meal(mealName, item.getString("name"), calories, protein, fat, carbs);
+                addMealToDatabase(newMeal);
+            } else {
+                Toast.makeText(this, "No nutritional data found.", Toast.LENGTH_SHORT).show();
             }
 
-            apiResponse.setText(formattedResponse.toString());
-            Toast.makeText(this, "Added This Meal to Today's Meals", Toast.LENGTH_SHORT).show();
-
-        }catch(JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to Parse Data", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void addMealToDatabase(Meal newMeal) {
+        mDatabase.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String highestDayId = null;
 
+                for (DataSnapshot daySnapshot : dataSnapshot.getChildren()) {
+                    String dayId = daySnapshot.getKey();
+                    if (highestDayId == null || Integer.parseInt(dayId) > Integer.parseInt(highestDayId)) {
+                        highestDayId = dayId;
+                    }
+                }
 
+                if (highestDayId != null) {
+                    DatabaseReference mealsRef = mDatabase.child(highestDayId).child("meals");
+                    mealsRef.push().setValue(newMeal);
+
+                    Toast.makeText(AddMeal.this, "Meal added to Day " + highestDayId, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddMeal.this, "No day found to add the meal.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(AddMeal.this, "Failed to retrieve days.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
