@@ -22,7 +22,6 @@ public class Meal {
         this.carbohydrates_total_g = carbohydrates_total_g;
     }
 
-    // Getters and setters for each field
     public String getName() {
         return name;
     }

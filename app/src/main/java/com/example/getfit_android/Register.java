@@ -120,7 +120,6 @@ public class Register extends AppCompatActivity {
 
 
                                 } else {
-                                    // If sign  in fails, display a message to the user.
                                     Toast.makeText(Register.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
@@ -135,19 +134,18 @@ public class Register extends AppCompatActivity {
                                 String passwordUser = editTextPassword.getText().toString().trim();
                                 int calorieGoal = 2000;
 
-                                // Create the user object without the days list
+                                // Creating user object
                                 Model user = new Model(emailUser, nameUser, passwordUser, calorieGoal, new ArrayList<>());
 
-                                // Save the user information under the "users" table with the name as the key
                                 reference.child(nameUser).setValue(user);
 
-                                // Now create the days table and add the first day for this user
+                                // Creating the Days table
                                 DatabaseReference daysReference = database.getReference("days");
 
-                                // Create Day 1
+                                // Creating First Day for the User
                                 Day day1 = new Day("1", emailUser, new ArrayList<>(), "0", "0", "0", "0");
 
-                                // Save Day 1 under the "days" table using the email as the key
+                                // Replacing "." on the email by ",", because Firebase does not allow table keys with "."
                                 daysReference.child(emailUser.replace(".", ",")).child("1").setValue(day1);
 
                                 Toast.makeText(Register.this, "Thank You for creating an Account", Toast.LENGTH_SHORT).show();

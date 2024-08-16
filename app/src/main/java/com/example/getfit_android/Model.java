@@ -16,7 +16,6 @@ public class Model {
         this.days = days;
     }
 
-    // Existing getters and setters
 
     public String getEmail() {
         return email;
