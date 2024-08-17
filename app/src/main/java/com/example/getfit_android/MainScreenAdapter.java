@@ -1,6 +1,7 @@
 package com.example.getfit_android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ public class MainScreenAdapter extends BaseAdapter {
         Meal meal = mealList.get(position);
         mealName.setText(meal.getName());
         mealCalories.setText(String.valueOf(meal.getCalories()) + " kcal");
+        Log.d("MainScreenAdapter", "Position: " + position + ", Total Meals: " + mealList.size());
+
 
         return convertView;
     }

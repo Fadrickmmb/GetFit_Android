@@ -214,6 +214,7 @@ public class MainScreen extends AppCompatActivity {
 
                 MainScreenAdapter adapter = new MainScreenAdapter(MainScreen.this, mealList);
                 mealsList.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
