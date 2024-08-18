@@ -8,6 +8,29 @@
     tools:context=".History">
 
 
+    <TextView
+        android:id="@+id/yourLastDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Last 5 Days"
+        android:textColor="@color/getFitGray"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomAppBar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <ListView
+        android:id="@+id/historyListView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourLastDays"
+        app:layout_constraintVertical_bias="0.231"
+        tools:layout_editor_absoluteX="16dp" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar2"
         android:layout_width="match_parent"
