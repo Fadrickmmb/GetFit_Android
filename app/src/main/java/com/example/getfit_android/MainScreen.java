@@ -105,6 +105,16 @@ public class MainScreen extends AppCompatActivity {
         });
 
 
+        endDayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentUser != null) {
+                    String userEmail = currentUser.getEmail().replace(".", ",");
+                    createNewDay(userEmail);
+                }
+            }
+        });
+
 
 
         // BOTTOM NAV BAR REDIRECTION - 1/4
@@ -254,6 +264,56 @@ public class MainScreen extends AppCompatActivity {
     }
 
 
+    private void createNewDay(String userEmail) {
+
+        DatabaseReference userDaysRef = dDatabase.child(userEmail);
+
+
+        userDaysRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String highestDayId = null;
+                for (DataSnapshot daySnapshot : dataSnapshot.getChildren()) {
+                    String dayId = daySnapshot.getKey();
+                    if (highestDayId == null || Integer.parseInt(dayId) > Integer.parseInt(highestDayId)) {
+                        highestDayId = dayId;
+                    }
+                }
+
+                // Determine the new dayId
+                int newDayId = (highestDayId != null) ? Integer.parseInt(highestDayId) + 1 : 1;
+
+
+                Day newDay = new Day(
+                        String.valueOf(newDayId),
+                        userEmail,
+                        new ArrayList<>(),
+                        "0",
+                        "0",
+                        "0",
+                        "0"
+                );
+
+
+                userDaysRef.child(String.valueOf(newDayId)).setValue(newDay)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainScreen.this, "New day created successfully!", Toast.LENGTH_SHORT).show();
+
+                                fetchMealsFromCurrentDay(userEmail.replace(".", ","));
+                            } else {
+                                Toast.makeText(MainScreen.this, "Failed to create new day.", Toast.LENGTH_SHORT).show();
+                                Log.e("CreateNewDay", "Error creating new day", task.getException());
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainScreen.this, "Failed to retrieve existing days.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 
