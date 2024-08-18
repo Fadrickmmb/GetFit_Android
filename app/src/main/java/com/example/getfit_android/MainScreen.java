@@ -43,7 +43,7 @@ import java.util.List;
 
 public class MainScreen extends AppCompatActivity {
 
-    TextView mainScreenName, mainScreenCalories, addMeal;
+    TextView mainScreenName, mainScreenCalories, addMeal, caloriesNow;
     ListView mealsList;
     Button endDayButton;
 
@@ -79,6 +79,7 @@ public class MainScreen extends AppCompatActivity {
         mealsList = findViewById(R.id.mainScreenMeals);
 
         calorieBar = findViewById(R.id.calorieBar);
+        caloriesNow = findViewById(R.id.caloriesUntilNow);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -151,7 +152,6 @@ public class MainScreen extends AppCompatActivity {
 
     private void fetchUserInfo(String email){
         mDatabase.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener(){
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -161,9 +161,10 @@ public class MainScreen extends AppCompatActivity {
                         String calorieGoal = String.valueOf(calorieGoalInt);
                         mainScreenName.setText(userName);
                         mainScreenCalories.setText(calorieGoal);
+
+                        calorieBar.setMax(calorieGoalInt);
                     }
                 }
-
             }
 
             @Override
@@ -172,6 +173,7 @@ public class MainScreen extends AppCompatActivity {
             }
         });
     }
+
 
     private void fetchMealsFromCurrentDay(String userEmailReplaced){
         dDatabase.child(userEmailReplaced).orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -199,18 +201,45 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
-    private void loadMealsFromDay(String userEmailReplaced, String dayId){
+    private void loadMealsFromDay(String userEmailReplaced, String dayId) {
         dDatabase.child(userEmailReplaced).child(dayId).child("meals").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Meal> mealList = new ArrayList<>();
+                int totalCalories = 0;
+                int totalProteins = 0;
+                int totalFat = 0;
+                int totalCarbs = 0;
+
                 for (DataSnapshot mealSnapshot : dataSnapshot.getChildren()) {
                     Meal meal = mealSnapshot.getValue(Meal.class);
                     if (meal != null) {
                         mealList.add(meal);
+                        totalCalories += meal.getCalories();
+                        totalProteins += meal.getProtein_g();
+                        totalFat += meal.getFat_total_g();
+                        totalCarbs += meal.getCarbohydrates_total_g();
                     }
                 }
-                Log.d("MealCount", "Number of meals: " + mealList.size());
+
+                Log.d("TotalNutrients", "Calories: " + totalCalories + ", Proteins: " + totalProteins + "g, Fat: " + totalFat + "g, Carbs: " + totalCarbs + "g");
+
+
+                dDatabase.child(userEmailReplaced).child(dayId).child("dayCalories").setValue(totalCalories);
+                dDatabase.child(userEmailReplaced).child(dayId).child("dayProteins").setValue(totalProteins);
+                dDatabase.child(userEmailReplaced).child(dayId).child("dayFat").setValue(totalFat);
+                dDatabase.child(userEmailReplaced).child(dayId).child("dayCarbs").setValue(totalCarbs)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("DayNutrients", "Day's nutrients updated successfully.");
+                            } else {
+                                Log.e("DayNutrients", "Failed to update day's nutrients.", task.getException());
+                            }
+                        });
+
+
+                calorieBar.setProgress(totalCalories);
+                caloriesNow.setText(String.valueOf(totalCalories));
 
                 MainScreenAdapter adapter = new MainScreenAdapter(MainScreen.this, mealList);
                 mealsList.setAdapter(adapter);
@@ -223,6 +252,9 @@ public class MainScreen extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 }
