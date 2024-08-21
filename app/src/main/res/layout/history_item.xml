@@ -10,12 +10,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/getFitGray"/>
 
     <TextView
         android:id="@+id/dayCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/getFitGray"/>
 
 </LinearLayout>
