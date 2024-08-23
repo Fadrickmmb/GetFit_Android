@@ -116,6 +116,8 @@ public class AddMeal extends AppCompatActivity {
         try {
             JSONObject jsonResponse = new JSONObject(response);
             JSONArray items = jsonResponse.getJSONArray("items");
+            boolean isValid = false;
+
 
             if (items.length() > 0) {
                 JSONObject item = items.getJSONObject(0);
@@ -124,9 +126,13 @@ public class AddMeal extends AppCompatActivity {
                 double fat = item.getDouble("fat_total_g");
                 double carbs = item.getDouble("carbohydrates_total_g");
 
+                if (calories > 0){
+                    Meal newMeal = new Meal(mealName, item.getString("name"), calories, protein, fat, carbs);
+                    addMealToDatabase(newMeal);
+                }else{
+                    Toast.makeText(this, "The Meal has 0 Calories", Toast.LENGTH_SHORT).show();
+                }
 
-                Meal newMeal = new Meal(mealName, item.getString("name"), calories, protein, fat, carbs);
-                addMealToDatabase(newMeal);
             } else {
                 Toast.makeText(this, "No nutritional data found.", Toast.LENGTH_SHORT).show();
             }
