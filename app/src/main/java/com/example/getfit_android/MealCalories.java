@@ -168,19 +168,33 @@ public class MealCalories extends AppCompatActivity {
             JSONArray items = jsonResponse.getJSONArray("items");
 
             StringBuilder formattedResponse = new StringBuilder();
+            boolean isValid = false;
+
 
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-                formattedResponse.append("Item ").append(i + 1).append(":\n");
-                formattedResponse.append("Name: ").append(item.getString("name")).append("\n");
-                formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
-                formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
-                formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
-                formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n");
-                formattedResponse.append("Fibers: ").append(item.getDouble("fiber_g")).append(" g\n\n");
+                double calories = item.getDouble("calories");
+
+                if (calories > 0){
+                    isValid = true;
+                    formattedResponse.append("Item ").append(i + 1).append(":\n");
+                    formattedResponse.append("Name: ").append(item.getString("name")).append("\n");
+                    formattedResponse.append("Calories: ").append(item.getDouble("calories")).append("\n");
+                    formattedResponse.append("Protein: ").append(item.getDouble("protein_g")).append(" g\n");
+                    formattedResponse.append("Fat: ").append(item.getDouble("fat_total_g")).append(" g\n");
+                    formattedResponse.append("Carbohydrates: ").append(item.getDouble("carbohydrates_total_g")).append(" g\n");
+                    formattedResponse.append("Fibers: ").append(item.getDouble("fiber_g")).append(" g\n\n");
+                }
+
             }
 
-            parsedResponse.setText(formattedResponse.toString());
+            if (isValid){
+                parsedResponse.setText(formattedResponse.toString());
+            }else{
+                Toast.makeText(this, "The Meal has 0 Calories", Toast.LENGTH_SHORT).show();
+                parsedResponse.setText("");
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
