@@ -94,16 +94,6 @@
             android:textSize="16dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:paddingRight="50dp"
-            android:text="+"
-            android:textColor="@color/getFitRed"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
 
     </LinearLayout>
 
@@ -190,15 +180,6 @@
             android:text="+"
             android:textColor="@color/getFitRed"
             android:textSize="18dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="50dp"
-            android:text="EDIT"
-            android:textColor="@color/getFitGray"
-            android:textSize="16dp"
             android:textStyle="bold" />
 
 
