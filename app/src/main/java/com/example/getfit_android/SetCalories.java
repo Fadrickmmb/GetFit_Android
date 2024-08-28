@@ -79,7 +79,7 @@ public class SetCalories extends AppCompatActivity {
                 if (currentUser != null) {
                     int calorieGoal = (int) calorieSlider.getValue();
                     updateCaloriesInDB(currentUser.getEmail(), calorieGoal);
-                    Toast.makeText(SetCalories.this, "Calories Goal set to " + calorieGoal, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SetCalories.this, "Calories Goal set to " + calorieGoal, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                     startActivity(intent);
                     finish();
