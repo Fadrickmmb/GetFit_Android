@@ -85,4 +85,13 @@
 
 ### **License**
 
-This project is licensed under the [MIT License] (https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/)
+
+
+### **Contact**
+
+For any queries or suggestions, please contact:
+- **Developer**: Fadrick Barroso
+- **Email**: [fadrick.barroso@gmail.com]
+- **LinkedIn**: [https://www.linkedin.com/in/fadrick-barroso/] 
+
