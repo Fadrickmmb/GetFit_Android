@@ -59,3 +59,30 @@
 - **CalorieNinjas API**:
    * Used to fetch calorie and macronutrient data for user-entered meals.
 
+
+### **How To Use**
+
+1. **User Registration and Login**
+   - Create an account or log in using your email and password.
+
+2. **Logging Meals**
+   - Tap on "Add Meal" to input meal details.
+   - Fetch nutritional information automatically or input it manually.
+
+3. **Viewing Day's Meals**
+   - Navigate to the "Today" screen to view your meals and their nutritional values for the current day.
+  
+4. **Managing Days**
+   - View the history of your logged days and their nutritional summaries.
+  
+
+### **Future Enhancements**
+
+- Add a graphical representation of daily and weekly nutritional progress.
+- Implement reminders for meal logging and hydration tracking.
+- Support for multiple languages.
+
+
+### **License**
+
+This project is licensed under the 
